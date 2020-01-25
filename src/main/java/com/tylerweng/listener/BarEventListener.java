@@ -14,5 +14,6 @@ public class BarEventListener {
     @Subscribe
     public void process(BarEvent event) {
         logger.info("BarEvent: {}", event);
+        throw new RuntimeException("bar throws");
     }
 }

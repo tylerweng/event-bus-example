@@ -1,6 +1,8 @@
 package com.tylerweng.subscriber;
 
 import com.google.common.eventbus.AsyncEventBus;
+import com.google.common.eventbus.SubscriberExceptionContext;
+import com.google.common.eventbus.SubscriberExceptionHandler;
 import com.tylerweng.event.AbstractEvent;
 import com.tylerweng.event.EventUtil;
 import com.tylerweng.listener.ListenerRegistry;
@@ -25,7 +27,8 @@ public class Subscriber {
     private final AsyncEventBus eventBus;
 
     public Subscriber() {
-        this.eventBus = new AsyncEventBus(Executors.newFixedThreadPool(THREAD_POOL_SIZE));
+        this.eventBus = new AsyncEventBus(Executors.newFixedThreadPool(THREAD_POOL_SIZE),
+                (exception, context) -> logger.info("Exception thrown by context: {}", context, exception));
         registerListeners();
     }
 
